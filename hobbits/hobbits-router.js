@@ -35,4 +35,18 @@ router.post("/", async (req, res, next) => {
 	}
 })
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const hobbit = await Hobbits.remove(req.params.id);
+    if (!hobbit) {
+      return res.status(404).json({
+        message: 'Hobbit not found',
+      });
+    }
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router
